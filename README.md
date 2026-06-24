@@ -97,10 +97,12 @@ python src/utils/dataset.py \
 
 ```bash
 python src/utils/create_indexes.py \
+	create_indexes \
 	--waveforms_hdf5_path=waveforms/train.h5 \
 	--indexes_hdf5_path=indexes/train.h5
 
 python src/utils/create_indexes.py \
+	create_indexes \
 	--waveforms_hdf5_path=waveforms/test.h5 \
 	--indexes_hdf5_path=indexes/test.h5
 ```
