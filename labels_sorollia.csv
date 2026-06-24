@@ -1,0 +1,27 @@
+index,display_name,class_id
+0,Air brake,air_brake
+1,"Beep, bleep",beep_bleep
+2,"Bird vocalization, bird call, bird song",bird_vocalization_bird_call_bird_song
+3,Blower,blower
+4,Clang,clang
+5,Cluck,cluck
+6,Construction noises,construction_noises
+7,Engine,engine
+8,Idling,idling
+9,Jackhammer,jackhammer
+10,"Jingle, tinkle",jingle_tinkle
+11,Metal noises,metal_noises
+12,Motor vehicle (road),motor_vehicle_road
+13,Motorcycle,motorcycle
+14,"Railroad car, train wagon",railroad_car_train_wagon
+15,Reversing beeps,reversing_beeps
+16,Scrape,scrape
+17,Seagull,seagull
+18,Siren,siren
+19,Squeak,squeak
+20,Tick,tick
+21,Tick-tock,ticktock
+22,"Traffic noise, roadway noise",traffic_noise_roadway_noise
+23,Train wheels squealing,train_wheels_squealing
+24,Truck,truck
+25,Wind,wind

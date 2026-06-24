@@ -33,6 +33,21 @@ The dataset consists of approximately **22 hours of audio**, segmented into shor
 
 Download the dataset from [Kaggle](https://www.kaggle.com/datasets/itiresearch/soroll-ia-weakly-labeled-audio-port-monitoring/)
 
+The Dataset is provided under [CC BY-NC 4.0 Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/)
+
+Once the dataset is download, unzip the data files and stored them on the same path. Your data structure should look like this:
+
+```text
+├── Ground-Truth
+|	├── CV
+|	├── Non-CV
+|	└── fold_assignments.csv
+└── Audios
+	├── 00001.flac
+	.....
+	└── 07396.flac
+```
+
 ## Run 5-fold benchmark
 
 To reproduce paper benchmark follow with one step, follow the next sections
@@ -51,6 +66,8 @@ sh run_benchmark_finetune.sh
 
 ## Step by Step
 
+Supposing using fold 0 for testing
+
 ### Data Preprocessing
 
 To prepare the :
@@ -61,14 +78,30 @@ python src/utils/dataset.py \
 
 ```bash
 python src/utils/create_indexes.py \
+	--waveforms_hdf5_path=waveforms/train.h5 \
+	--indexes_hdf5_path=indexes/train.h5
+
+python src/utils/create_indexes.py \
+	--waveforms_hdf5_path=waveforms/test.h5 \
+	--indexes_hdf5_path=indexes/test.h5
 ```
+
 
 ### Training
 
-```
+```bash
 python src/main.py \
+	--workspace=outputs \
+	--train_data=indexes/train.h5 \
+	--test_data=indexes/test.h5 \
+	--csv_label=labels_sorollia.csv \
 ```
 
-```
+```bash
 python src/finetune.py \
+	--workspace=outputs \
+	--train_data=indexes/train.h5 \
+	--test_data=indexes/test.h5 \
+	--csv_label=labels_sorollia.csv \
 ```
+
