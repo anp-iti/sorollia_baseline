@@ -55,13 +55,13 @@ To reproduce paper benchmark follow with one step, follow the next sections
 ### From scratch
 
 ```bash
-sh run_benchmark_scratch.sh
+sh scripts/run_benchmark_scratch.sh
 ```
 
 ### Fine-tune CNN14
 
 ```bash
-sh run_benchmark_finetune.sh
+sh scripts/run_benchmark_finetune.sh
 ```
 
 ## Step by Step
