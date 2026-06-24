@@ -38,14 +38,15 @@ The Dataset is provided under [CC BY-NC 4.0 Attribution-NonCommercial 4.0 Intern
 Once the dataset is download, unzip the data files and stored them on the same path. Your data structure should look like this:
 
 ```text
-├── Ground-Truth
-|	├── CV
-|	├── Non-CV
-|	└── fold_assignments.csv
-└── Audios
-	├── 00001.flac
-	.....
-	└── 07396.flac
+sorollia
+	├── Ground-Truth
+	|		├── CV
+	|		├── Non-CV
+	|		└── fold_assignments.csv
+	└── audios
+		├── 00001.flac
+		.....
+		└── 07396.flac
 ```
 
 ## Run 5-fold benchmark
@@ -66,7 +67,11 @@ sh scripts/run_benchmark_finetune.sh
 
 ## Step by Step
 
-Supposing using fold 0 for testing
+Supposing using CV fold 0 for testing
+
+### Create Train/Test csvs
+
+Add explanation
 
 ### Data Preprocessing
 
@@ -74,6 +79,20 @@ To prepare the :
 
 ```bash
 python src/utils/dataset.py \
+	pack_waveforms_to_hdf5 \
+	--csv_path=sorollia/Ground-Truth/fold_0_train.csv \
+	--audio_dir=sorollia/audios \
+	--waveforms_hdf5_path=waveforms/train.h5 \
+	--csv_label=labels_sorollia.csv \
+	--fsamp=32000
+
+python src/utils/dataset.py \
+	pack_waveforms_to_hdf5 \
+	--csv_path=sorollia/Ground-Truth/fold_0_test.csv \
+	--audio_dir=sorollia/audios \
+	--waveforms_hdf5_path=waveforms/test.h5 \
+	--csv_label=labels_sorollia.csv \
+	--fsamp=32000
 ```
 
 ```bash

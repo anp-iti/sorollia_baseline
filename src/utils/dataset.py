@@ -165,7 +165,6 @@ if __name__ == '__main__':
     parser_pack_wavs.add_argument('--csv_path', type = str, required = True, help = 'Path of csv file containing audio info to be downloaded.')
     parser_pack_wavs.add_argument('--audios_dir', type = str, required = False, help = 'Directory to save out downloaded audio.')
     parser_pack_wavs.add_argument('--waveforms_hdf5_path', type = str, required = True, help = 'Path to save out packed hdf5.')
-    parser_pack_wavs.add_argument('--cuda', action = 'store_true', default = False, help = 'Use GPU to do different calculations')
     parser_pack_wavs.add_argument('--csv_label', type = str, required= True, help = 'Path to csv to map labels')
     parser_pack_wavs.add_argument('--fsamp', type=int, required=False, default=44100, help='Sample rate of audio')
 
