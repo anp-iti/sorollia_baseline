@@ -1,6 +1,6 @@
-# Soroll-IA: Industrial Port Audio Tagging Dataset & Benchmark
+# :anchor: :ship: Soroll-IA: Industrial Port Audio Tagging Dataset & Benchmark
 
-## Overview
+## :sunrise: Overview
 
 Soroll-IA is a weakly labeled environmental audio dataset recorded in a real-world industrial port environment. It is designed for multi-label audio tagging under realistic acoustic conditions and supports benchmarking of deep learning models under both cross-validation (CV) and non-cross-validation (Non-CV) evaluation protocols for annotations.
 
@@ -13,7 +13,7 @@ The repository provides:
 
 ---
 
-## Data
+## :dart: Data
 
 The dataset consists of approximately **22 hours of audio**, segmented into short clips of fixed duration. It includes **26 sound event classes** related to industrial port activity.
 
