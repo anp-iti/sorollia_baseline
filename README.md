@@ -126,3 +126,21 @@ python src/finetune.py \
 	--csv_label=labels_sorollia.csv \
 ```
 
+# Citation
+
+If using this dataset, please cite:
+
+1. Naranjo-Alcazar, J., Grau-Haro, J., Ribes-Serrano, R., & Zuccarello, P. (2025, March). A Data-Centric Framework for Machine Listening Projects: Addressing Large-Scale Data Acquisition and Labeling through Active Learning. In Future of Information and Communication Conference (pp. 647-659). Cham: Springer Nature Switzerland.
+
+```text
+@inproceedings{naranjo2025data,
+  title={A Data-Centric Framework for Machine Listening Projects: Addressing Large-Scale Data Acquisition and Labeling through Active Learning},
+  author={Naranjo-Alcazar, Javier and Grau-Haro, Jordi and Ribes-Serrano, Ruben and Zuccarello, Pedro},
+  booktitle={Future of Information and Communication Conference},
+  pages={647--659},
+  year={2025},
+  organization={Springer}
+}
+```
+
+2. Soroll-IA paper to be added
