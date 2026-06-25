@@ -18,7 +18,6 @@ import torch.optim as optim
 import torch.utils.data
 from torchsummary import summary
 from torchview import draw_graph
-import mlflow
 import matplotlib.pyplot as plt
 
 from torch.optim.lr_scheduler import ReduceLROnPlateau

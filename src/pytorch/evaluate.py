@@ -1,14 +1,6 @@
-
-#FROM METRICS? metrics también, no?
-
-
-
-
-
 import sys
 import os
 sys.path.insert(1, os.path.join(sys.path[0], '../utils'))
-import config
 from data_generator import (AudioSetDataset, EvaluateSampler, collate_fn)
 from utilities import create_folder
 
