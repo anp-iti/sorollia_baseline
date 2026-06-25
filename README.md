@@ -18,6 +18,7 @@ The repository provides:
 The dataset consists of approximately **22 hours of audio**, segmented into short clips of fixed duration. It includes **26 sound event classes** related to industrial port activity.
 
 ### Key properties:
+
 - Multi-label annotations
 - Weak labeling (clip-level, no temporal boundaries)
 - Two recording nodes deployed in different acoustic zones
@@ -51,18 +52,40 @@ sorollia
 
 ## Run 5-fold benchmark
 
-To reproduce paper benchmark follow with one step, follow the next sections
+To reproduce the full benchmark, use the provided scripts. They automatically generate the train/test CSV files, pack waveforms into HDF5, create indexes, and run training or fine-tuning.
+
+Both evaluation protocols are supported through `--fold-group`:
+
+- `cv`: run only CV folds
+- `non_cv`: run only Non-CV folds
+- `both`: run both protocols, default option
 
 ### From scratch
 
 ```bash
-sh scripts/run_benchmark_scratch.sh
+bash scripts/run_benchmark_scratch.sh --fold-group <cv|non_cv|both>
 ```
 
 ### Fine-tune CNN14
 
 ```bash
-sh scripts/run_benchmark_finetune.sh
+bash scripts/run_benchmark_finetune.sh --fold-group <cv|non_cv|both>
+```
+
+### Generate train/test CSVs only
+
+If you only want to generate the train/test CSV files for all folds, run:
+
+```bash
+bash scripts/generate_all_folds_csv.sh
+```
+
+This creates the train.csv and test.csv files under:
+
+```text
+sorollia/Ground-Truth/generated/
+├── CV/
+└── Non-CV/
 ```
 
 ## Step by Step
@@ -71,7 +94,27 @@ Supposing using CV fold 0 for testing
 
 ### Create Train/Test csvs
 
-Add explanation
+The dataset provides one CSV file per fold. Before preprocessing, explicit train.csv and test.csv files must be generated.
+
+For CV fold 0:
+
+```bash
+python src/utils/csv_from_folds.py \
+    -d sorollia/Ground-Truth \
+    --fold-type cv \
+    -t 0 \
+    --train-out train.csv \
+    --test-out test.csv \
+    -o sorollia/Ground-Truth/generated/CV/fold_0
+```
+
+This creates:
+
+```text
+sorollia/Ground-Truth/generated/CV/fold_0/
+├── train.csv
+└── test.csv
+```
 
 ### Data Preprocessing
 
@@ -80,17 +123,17 @@ To prepare the :
 ```bash
 python src/utils/dataset.py \
 	pack_waveforms_to_hdf5 \
-	--csv_path=sorollia/Ground-Truth/fold_0_train.csv \
+	--csv_path=sorollia/Ground-Truth/generated/CV/fold_0/train.csv \
 	--audio_dir=sorollia/audios \
-	--waveforms_hdf5_path=waveforms/train.h5 \
+	--waveforms_hdf5_path=hdf5s/CV/fold_0/waveforms/train.h5 \
 	--csv_label=labels_sorollia.csv \
 	--fsamp=32000
 
 python src/utils/dataset.py \
 	pack_waveforms_to_hdf5 \
-	--csv_path=sorollia/Ground-Truth/fold_0_test.csv \
+	--csv_path=sorollia/Ground-Truth/generated/CV/fold_0/test.csv \
 	--audio_dir=sorollia/audios \
-	--waveforms_hdf5_path=waveforms/test.h5 \
+	--waveforms_hdf5_path=hdf5s/CV/fold_0/waveforms/test.h5 \
 	--csv_label=labels_sorollia.csv \
 	--fsamp=32000
 ```
@@ -98,32 +141,31 @@ python src/utils/dataset.py \
 ```bash
 python src/utils/create_indexes.py \
 	create_indexes \
-	--waveforms_hdf5_path=waveforms/train.h5 \
-	--indexes_hdf5_path=indexes/train.h5
+	--waveforms_hdf5_path=hdf5s/CV/fold_0/waveforms/train.h5 \
+	--indexes_hdf5_path=hdf5s/CV/fold_0/indexes/train.h5
 
 python src/utils/create_indexes.py \
 	create_indexes \
-	--waveforms_hdf5_path=waveforms/test.h5 \
-	--indexes_hdf5_path=indexes/test.h5
+	--waveforms_hdf5_path=hdf5s/CV/fold_0/waveforms/test.h5 \
+	--indexes_hdf5_path=hdf5s/CV/fold_0/indexes/test.h5
 ```
-
 
 ### Training
 
 ```bash
 python src/main.py \
-	--workspace=outputs \
-	--train_data=indexes/train.h5 \
-	--test_data=indexes/test.h5 \
-	--csv_label=labels_sorollia.csv \
+	--workspace=outputs/CV/fold_0 \ 
+	--train_data=hdf5s/CV/fold_0/indexes/train.h5 \
+	--test_data=hdf5s/CV/fold_0/indexes/test.h5 \
+	--csv_label=labels_sorollia.csv
 ```
 
 ```bash
 python src/finetune.py \
-	--workspace=outputs \
-	--train_data=indexes/train.h5 \
-	--test_data=indexes/test.h5 \
-	--csv_label=labels_sorollia.csv \
+	--workspace=outputs_finetune/CV/fold_0 \
+	--train_data=hdf5s/CV/fold_0/indexes/train.h5 \
+	--test_data=hdf5s/CV/fold_0/indexes/test.h5 \
+	--csv_label=labels_sorollia.csv
 ```
 
 # Citation
