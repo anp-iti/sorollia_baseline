@@ -26,10 +26,10 @@ FSAMP=32000
 CSV_FROM_FOLDS_SCRIPT="src/utils/csv_from_folds.py"
 DATASET_SCRIPT="src/utils/dataset.py"
 INDEX_SCRIPT="src/utils/create_indexes.py"
-TRAIN_SCRIPT="src/main.py"
+TRAIN_SCRIPT="src/pytorch/main.py"
 
 # Extra training arguments.
-# Add here the arguments required by your src/main.py.
+# Add here the arguments required by your src/pytorch/main.py.
 TRAIN_ARGS=""
 
 # Example:

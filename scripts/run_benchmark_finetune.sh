@@ -26,10 +26,10 @@ FSAMP=32000
 CSV_FROM_FOLDS_SCRIPT="src/utils/csv_from_folds.py"
 DATASET_SCRIPT="src/utils/dataset.py"
 INDEX_SCRIPT="src/utils/create_indexes.py"
-FINETUNE_SCRIPT="src/finetune.py"
+FINETUNE_SCRIPT="src/pytorch/finetune.py"
 
 # Extra fine-tuning arguments.
-# Add here the arguments required by your src/finetune.py.
+# Add here the arguments required by your src/pytorch/finetune.py.
 FINETUNE_ARGS=""
 
 # Example:
