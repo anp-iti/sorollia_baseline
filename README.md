@@ -123,7 +123,7 @@ To prepare the :
 ```bash
 python src/utils/dataset.py \
 	pack_waveforms_to_hdf5 \
-	--csv_path=sorollia/Ground-Truth/generated/CV/fold_0/train.csv \
+	--csv_path=sorollia/Ground-Truth/generated/CV/fold_0/train.csv \    --logs_path=logs/CV/fold_0 \
 	--audio_dir=sorollia/audios \
 	--waveforms_hdf5_path=hdf5s/CV/fold_0/waveforms/train.h5 \
 	--csv_label=labels_sorollia.csv \
@@ -131,7 +131,7 @@ python src/utils/dataset.py \
 
 python src/utils/dataset.py \
 	pack_waveforms_to_hdf5 \
-	--csv_path=sorollia/Ground-Truth/generated/CV/fold_0/test.csv \
+	--csv_path=sorollia/Ground-Truth/generated/CV/fold_0/test.csv \    --logs_path=logs/CV/fold_0 \
 	--audio_dir=sorollia/audios \
 	--waveforms_hdf5_path=hdf5s/CV/fold_0/waveforms/test.h5 \
 	--csv_label=labels_sorollia.csv \

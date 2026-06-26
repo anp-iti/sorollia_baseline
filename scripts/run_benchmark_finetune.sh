@@ -20,6 +20,7 @@ CSV_LABEL="labels_sorollia.csv"
 
 WORKSPACE_BASE="outputs_finetune"
 HDF5_BASE="hdf5s"
+LOGS_BASE="logs"
 
 FSAMP=32000
 
@@ -178,12 +179,14 @@ for FOLD_GROUP in "${FOLD_GROUPS[@]}"; do
         TEST_INDEXES_HDF5="${INDEXES_DIR}/test.h5"
 
         WORKSPACE="${WORKSPACE_BASE}/${FOLD_GROUP}/fold_${TEST_FOLD}"
+        LOGS_DIR="${LOGS_BASE}/${FOLD_GROUP}/fold_${TEST_FOLD}"
 
         mkdir -p "${CSV_DIR}"
         mkdir -p "${WAVEFORMS_DIR}"
         mkdir -p "${INDEXES_DIR}"
         mkdir -p "${WORKSPACE}"
-
+        mkdir -p "${LOGS_DIR}"
+        
         echo ""
         echo "[1/6] Generating train/test CSV files"
         python "${CSV_FROM_FOLDS_SCRIPT}" \
@@ -199,6 +202,7 @@ for FOLD_GROUP in "${FOLD_GROUPS[@]}"; do
         python "${DATASET_SCRIPT}" \
             pack_waveforms_to_hdf5 \
             --csv_path="${TRAIN_CSV}" \
+            --logs_path="${LOGS_DIR}" \
             --audios_dir="${AUDIO_DIR}" \
             --waveforms_hdf5_path="${TRAIN_WAVEFORMS_HDF5}" \
             --csv_label="${CSV_LABEL}" \
@@ -209,6 +213,7 @@ for FOLD_GROUP in "${FOLD_GROUPS[@]}"; do
         python "${DATASET_SCRIPT}" \
             pack_waveforms_to_hdf5 \
             --csv_path="${TEST_CSV}" \
+            --logs_path="${LOGS_DIR}" \
             --audios_dir="${AUDIO_DIR}" \
             --waveforms_hdf5_path="${TEST_WAVEFORMS_HDF5}" \
             --csv_label="${CSV_LABEL}" \
