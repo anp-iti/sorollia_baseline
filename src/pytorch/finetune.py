@@ -28,8 +28,7 @@ from utilities import (create_folder, get_filename, create_logging, Mixup,
 from models_finetune import Transfer_Cnn14, Transfer_Cnn10, Transfer_Cnn6, Transfer_MobileNetV2, Transfer_MobileNetV1
 from pytorch_utils import (move_data_to_device, count_parameters, count_flops, 
     do_mixup)
-from data_generator import (AudioSetDataset, TrainSampler, BalancedTrainSampler, 
-    AlternateTrainSampler, EvaluateSampler, collate_fn)
+from data_generator import (AudioSetDataset, TrainSampler, EvaluateSampler, collate_fn)
 from evaluate import Evaluator
 from losses import get_loss_func
 
@@ -192,17 +191,12 @@ def net_summary(model,clip_samples,logs_dir,batch_size,full_summary):
 
 
 def sampler(train_indexes_hdf5_path,eval_bal_indexes_hdf5_path,eval_test_indexes_hdf5_path,
-            batch_size,augmentation,balanced,black_list_csv,
+            batch_size,augmentation,black_list_csv,
             path_to_csv_labels):
 
-    if balanced == 'none':
-        Sampler = TrainSampler
-    elif balanced == 'balanced':
-        Sampler = BalancedTrainSampler
-    elif balanced == 'alternate':
-        Sampler = AlternateTrainSampler
+   
      
-    train_sampler = Sampler(
+    train_sampler = TrainSampler(
         indexes_hdf5_path=train_indexes_hdf5_path, 
         batch_size=batch_size * 2 if 'mixup' in augmentation else batch_size,
         black_list_csv=black_list_csv,
@@ -256,7 +250,6 @@ def train(args):
     val_data = args.val_data
     model_type = args.model_type
     loss_type = args.loss_type
-    balanced = args.balanced
     augmentation = args.augmentation
     batch_size = args.batch_size
     learning_rate = args.learning_rate
@@ -330,7 +323,6 @@ def train(args):
     fmax = {fmax}
     model_type = {model_type}
     loss_type = {loss_type}
-    balanced = {balanced}
     augmentation = {augmentation}
     batch_size = {batch_size}
     learning_rate = {learning_rate}
@@ -358,7 +350,7 @@ def train(args):
     dataset = AudioSetDataset(sample_rate=sample_rate)
     train_sampler,eval_bal_sampler,eval_test_sampler =sampler(train_indexes_hdf5_path,
                                                                 eval_bal_indexes_hdf5_path, eval_test_indexes_hdf5_path,
-                                                                batch_size, augmentation, balanced,black_list_csv,
+                                                                batch_size, augmentation,black_list_csv,
                                                                 path_to_csv_labels=args.csv_label)
     train_loader,eval_bal_loader,eval_test_loader = data_loader(dataset,train_sampler,eval_bal_sampler,eval_test_sampler)
     
@@ -429,7 +421,6 @@ if __name__ == '__main__':
     parser_train.add_argument('--fmax', type=int, required=True) 
     parser_train.add_argument('--model_type', type=str, required=True)
     parser_train.add_argument('--loss_type', type=str, default='clip_bce', choices=['clip_bce','clip_classification'])
-    parser_train.add_argument('--balanced', type=str, default='balanced', choices=['none', 'balanced', 'alternate'])
     parser_train.add_argument('--augmentation', type=str, default='mixup', choices=['none', 'mixup'])
     parser_train.add_argument('--batch_size', type=int, default=32)
     parser_train.add_argument('--learning_rate', type=float, default=1e-3)

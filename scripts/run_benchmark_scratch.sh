@@ -199,7 +199,7 @@ for FOLD_GROUP in "${FOLD_GROUPS[@]}"; do
         python "${DATASET_SCRIPT}" \
             pack_waveforms_to_hdf5 \
             --csv_path="${TRAIN_CSV}" \
-            --audio_dir="${AUDIO_DIR}" \
+            --audios_dir="${AUDIO_DIR}" \
             --waveforms_hdf5_path="${TRAIN_WAVEFORMS_HDF5}" \
             --csv_label="${CSV_LABEL}" \
             --fsamp="${FSAMP}"
@@ -209,7 +209,7 @@ for FOLD_GROUP in "${FOLD_GROUPS[@]}"; do
         python "${DATASET_SCRIPT}" \
             pack_waveforms_to_hdf5 \
             --csv_path="${TEST_CSV}" \
-            --audio_dir="${AUDIO_DIR}" \
+            --audios_dir="${AUDIO_DIR}" \
             --waveforms_hdf5_path="${TEST_WAVEFORMS_HDF5}" \
             --csv_label="${CSV_LABEL}" \
             --fsamp="${FSAMP}"

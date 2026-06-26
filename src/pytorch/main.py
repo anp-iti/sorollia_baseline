@@ -30,8 +30,7 @@ from models import (Cnn14, Cnn14_no_specaug, Cnn14_no_dropout,
     Cnn14_mixup_time_domain, Cnn14_DecisionLevelMax, Cnn14_DecisionLevelAtt)
 from pytorch_utils import (move_data_to_device, count_parameters, count_flops, 
     do_mixup)
-from data_generator import (AudioSetDataset, TrainSampler, BalancedTrainSampler, 
-    AlternateTrainSampler, EvaluateSampler, collate_fn)
+from data_generator import (AudioSetDataset, TrainSampler, EvaluateSampler, collate_fn)
 from evaluate import Evaluator
 from losses import get_loss_func
 
@@ -53,7 +52,6 @@ def train(args):
         fmax: int
         model_type: list[str]
         loss_type: 'clip_bce'
-        balanced: 'none' | 'balanced' | 'alternate'
         augmentation: 'none' | 'mixup'
         batch_size: int
         learning_rate: float
@@ -149,7 +147,6 @@ def train(args):
         fmax = {fmax}
         model_type = {model_type}
         loss_type = {loss_type}
-        balanced = {balanced}
         augmentation = {augmentation}
         batch_size = {batch_size}
         learning_rate = {learning_rate}
@@ -185,15 +182,9 @@ def train(args):
         # and return a waveform and a target.
         dataset = AudioSetDataset(sample_rate=sample_rate)
         
-        # - Until this point it is declared the necessary arguments, also the path until the .h5 file and 
-        if balanced == 'none':
-            Sampler = TrainSampler
-        elif balanced == 'balanced':
-            Sampler = BalancedTrainSampler
-        elif balanced == 'alternate':
-            Sampler = AlternateTrainSampler
         
-        train_sampler = Sampler(
+        
+        train_sampler = TrainSampler(
             indexes_hdf5_path=train_indexes_hdf5_path, 
             batch_size=batch_size * 2 if 'mixup' in augmentation else batch_size,
             black_list_csv=black_list_csv,
@@ -463,7 +454,6 @@ if __name__ == '__main__':
     parser_train.add_argument('--fmax', type=int, default=14000) 
     parser_train.add_argument('--model_type', nargs = '*', default = available_models)
     parser_train.add_argument('--loss_type', type=str, default='clip_bce', choices=['clip_bce'])
-    parser_train.add_argument('--balanced', type=str, default='balanced', choices=['none', 'balanced', 'alternate'])
     parser_train.add_argument('--augmentation', type=str, default='mixup', choices=['none', 'mixup'])
     parser_train.add_argument('--batch_size', type=int, default=32)
     parser_train.add_argument('--learning_rate', type=float, default=1e-3)
