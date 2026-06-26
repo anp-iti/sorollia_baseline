@@ -9,9 +9,7 @@ import logging
 import h5py
 import librosa
 import torch
-import config
 import sys
-sys.path.append(config.pytorch_path)
 import pandas as pd
 
 from utilities import (create_folder, get_filename, create_logging, 
@@ -105,11 +103,8 @@ def pack_waveforms_to_hdf5(args):
     clip_samples = args.fsamp * args.duration
     classes_num, labels = obtain_number_classes(csv_path)
     sample_rate = args.fsamp
-    window_size = config.window_size
-    hop_size = config.hop_size
-    mel_bins = config.mel_bins
-    fmin = config.fmin
-    fmax = config.fmax
+
+    xx_to_xi = create_mappings(csv_label)
 
     meta_dict = read_metadata(csv_path, classes_num, xx_to_xi)
 
