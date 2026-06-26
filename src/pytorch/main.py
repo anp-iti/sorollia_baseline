@@ -83,7 +83,6 @@ def train(args):
     fmax = args.fmax
     models = args.model_type
     loss_type = args.loss_type
-    balanced = args.balanced
     augmentation = args.augmentation
     batch_size = args.batch_size
     learning_rate = args.learning_rate
@@ -232,7 +231,7 @@ def train(args):
         optimizer = optim.Adam(model.parameters(), lr = learning_rate, 
             betas = (0.9, 0.999), eps = 1e-08, weight_decay = 0., amsgrad = True)
         scheduler = ReduceLROnPlateau(optimizer, mode = 'max',
-                                    patience = patience_lr, factor = factor_lr, verbose = True)
+                                    patience = patience_lr, factor = factor_lr)
 
         train_bgn_time = time.time()
         
@@ -242,7 +241,7 @@ def train(args):
                 'sample_rate={},window_size={},hop_size={},mel_bins={},fmin={},fmax={}'.format(
                 sample_rate, window_size, hop_size, mel_bins, fmin, fmax), 
                 'data_type={}'.format(data_type), model_type, 
-                'loss_type={}'.format(loss_type), 'balanced={}'.format(balanced), 
+                'loss_type={}'.format(loss_type), 
                 'augmentation={}'.format(augmentation), 'batch_size={}'.format(batch_size), 
                 '{}_iterations.pth'.format(resume_iteration))
 
@@ -461,7 +460,7 @@ if __name__ == '__main__':
     parser_train.add_argument('--early_stop', type=int, default=10)
     parser_train.add_argument('--patience_lr', type=int, default=5)
     parser_train.add_argument('--factor_lr', type=float, default=0.5)
-    parser_train.add_argument('--total_iterations', type=int, default=10000000)
+    parser_train.add_argument('--total_iterations', type=int, default=20000)
     parser_train.add_argument('--cuda', action='store_true', default=True)
     parser_train.add_argument('--full_summary', action='store_true', default=False)
     parser_train.add_argument('--train_data', type=str, required=True)

@@ -428,7 +428,7 @@ if __name__ == '__main__':
     parser_train.add_argument('--early_stop', type=int, default=10)
     parser_train.add_argument('--patience_lr', type=int, default=5)
     parser_train.add_argument('--factor_lr', type=float, default=0.5)
-    parser_train.add_argument('--total_iterations', type=int, default=10000000)
+    parser_train.add_argument('--total_iterations', type=int, default=20000)
     parser_train.add_argument('--train_data', type=str, required=True)
     parser_train.add_argument('--test_data', type=str, required=True)
     parser_train.add_argument('--val_data', type=str, required=False)

@@ -130,7 +130,7 @@ def pack_waveforms_to_hdf5(args):
         targets = []
 
         for n in range(audios_num):
-            logger.info(f'{n+1}/{len(audios_num)}')
+            logger.info(f'{n+1}/{audios_num}')
             logger.info(audios_dir)
             audio_path = os.path.join(audios_dir, meta_dict['audio_name'][n])
             logger.info(audio_path)
@@ -163,6 +163,8 @@ if __name__ == '__main__':
     parser_pack_wavs.add_argument('--waveforms_hdf5_path', type = str, required = True, help = 'Path to save out packed hdf5.')
     parser_pack_wavs.add_argument('--csv_label', type = str, required= True, help = 'Path to csv to map labels')
     parser_pack_wavs.add_argument('--fsamp', type=int, required=False, default=44100, help='Sample rate of audio')
+    parser_pack_wavs.add_argument('--duration', type=int, required=False, default=10, help='Duration of training clips')
+
 
 
     args = parser.parse_args()

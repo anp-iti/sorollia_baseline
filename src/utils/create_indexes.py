@@ -9,7 +9,7 @@ import logging
 import h5py
 import librosa
 
-from utils.utilities import create_folder
+from utilities import create_folder
 
 
 def create_indexes(args):

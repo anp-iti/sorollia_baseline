@@ -236,6 +236,7 @@ for FOLD_GROUP in "${FOLD_GROUPS[@]}"; do
         echo ""
         echo "[6/6] Training from scratch"
         python "${TRAIN_SCRIPT}" \
+            train \
             --workspace="${WORKSPACE}" \
             --train_data="${TRAIN_INDEXES_HDF5}" \
             --test_data="${TEST_INDEXES_HDF5}" \
